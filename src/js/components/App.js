@@ -1,5 +1,6 @@
 import React,{Component} from 'react';
 import Home from './Home';
+import Nav from './Nav';
 
 import {
     BrowserRouter as Router,
@@ -17,10 +18,16 @@ class App extends Component{
     render(){
         return(
             <Router>
-                <div>
-                    <Switch>                                                          
-                        <Route exact path="/" component={Home} />
-                    </Switch>   
+                <div className="container-fluid">
+                    <div className="row">
+                        <Nav />
+                    </div>    
+                    
+                    <div className="row"> 
+                        <Switch>                                                                                                              
+                            <Route exact path="/" component={Home} />
+                        </Switch>   
+                    </div>
                 </div>
             </Router>         
         )
