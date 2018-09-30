@@ -1,0 +1,1 @@
+export const TOGGLE_TIME = 'TOGGLE_TIME';
