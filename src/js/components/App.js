@@ -1,5 +1,13 @@
 import React,{Component} from 'react';
-import Login from './Login';
+import Home from './Home';
+
+import {
+    BrowserRouter as Router,
+    Route,
+    Link,
+    Switch,
+    Redirect
+} from 'react-router-dom';
 
 class App extends Component{
     constructor(){
@@ -8,10 +16,13 @@ class App extends Component{
 
     render(){
         return(
-            <div>
-                <h1>LOGIN application</h1>
-                <Login /> 
-            </div>
+            <Router>
+                <div>
+                    <Switch>                                                          
+                        <Route exact path="/" component={Home} />
+                    </Switch>   
+                </div>
+            </Router>         
         )
     }       
 
