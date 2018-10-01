@@ -3,14 +3,13 @@ import FacebookLogin from 'react-facebook-login';
 import { GoogleLogin } from 'react-google-login';
 import config from '../../JSON/config.json';
 import '../../css/login.css';
+import LocalLogin from './LocalLogin';
 
 class Login extends Component{
     constructor(){
         super();           
     }
-
-    
-
+ 
     facebookResponse(response){
         const tokenBlob = new Blob([JSON.stringify({access_token:
         response.accessToken},null,2)],{type:'application/json'});
@@ -31,7 +30,7 @@ class Login extends Component{
                 //     });
         })
     }
-    
+
     googleResponse(response){
         const tokenBlob = new Blob([JSON.stringify({access_token:
             response.accessToken},null,2)],{type:'application/json'});
@@ -81,27 +80,12 @@ class Login extends Component{
                 </div> 
                 
                 <div className="row justify-content-center pt-3 pb-3 text-dark" >
-                ----------------or----------------
+                    ----------------or----------------
                 </div>               
-                
-                <div className="row justify-content-center pr-3 pl-3">
-                    <form className="w-100">
-                        <div className = "form-group" >
-                            <label >Enter Username</label>
-                            <input type = "text" className="form-control" name="username" />                        
-                        </div>
 
-                        <div className = "form-group" >
-                            <label >Enter password</label>
-                            <input type = "password" className="form-control" name="password" />                        
-                        </div>
+                <LocalLogin />
 
-                        <div className="form-group text-center">
-                            <button type= "submit" className="btn btn-dark">Login</button>
-                        </div>
-                    </form>
-                </div>               
-            </div>        
+            </div>
         );
         
     }

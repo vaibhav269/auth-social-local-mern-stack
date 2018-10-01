@@ -1,5 +1,6 @@
 module.exports = function(app,passport){
- app.get('/hello',function(req,res){
-    console.log("hello");
-})   
+    app.post('/local-login',function(req,res){
+        console.log("Came here")    
+        res.send("hello");
+    });   
 }
