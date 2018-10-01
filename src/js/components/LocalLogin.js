@@ -19,7 +19,7 @@ class LocalLogin extends Component{
             res.text().then(
                 (text)=>{ console.log(text);}
             );
-        })        
+        })
     }
 
     render(){

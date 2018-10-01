@@ -1,4 +1,5 @@
 import React,{Component} from 'react';
+import {Link} from 'react-router-dom';
 
 class Signup extends Component{
     
@@ -6,8 +7,21 @@ class Signup extends Component{
         super();
     }
 
-    localSignup(){
-        alert("sign me up");
+    localSignup(event){
+        event.preventDefault();
+        var formData = new Blob([JSON.stringify({formData:new FormData(event.target)},null,2)],{type:'application/json'});
+        const options = {
+            method : 'POST',
+            body : formData,
+            mode : 'cors',
+            cache : 'default'
+        }
+        fetch('http://localhost:3000/local-signup',options)
+        .then( res=>{
+            res.text().then(
+                (text)=>{ console.log(text);}
+            );
+        })
     }
     
     render(){
@@ -38,8 +52,8 @@ class Signup extends Component{
                 </div>
 
                 <hr className = "m-3"/>
-                <p>Already have an account? <a href="/login">Login</a></p>
-                <p>Or go <a href="/">home</a>.</p>
+                <p>Already have an account? <Link to="/login">Login</Link></p>
+                <p>Or go <Link to="/">Home</Link>.</p>
 
             </div>
         )
