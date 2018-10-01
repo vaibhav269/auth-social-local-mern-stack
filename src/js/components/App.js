@@ -2,6 +2,7 @@ import React,{Component} from 'react';
 import Home from './Home';
 import Nav from './Nav';
 import Login from './Login';
+import Signup from './Signup';
 
 import {
     BrowserRouter as Router,
@@ -28,6 +29,7 @@ class App extends Component{
                         <Switch>                                                                                                              
                             <Route exact path="/" component={Home} />
                             <Route path = "/login" component={Login}/>
+                            <Route path = "/signup" component={Signup}/>
                         </Switch>   
                     </div>
                 </div>

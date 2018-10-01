@@ -79,9 +79,7 @@ class Login extends Component{
                     />
                 </div> 
                 
-                <div className="row justify-content-center pt-3 pb-3 text-dark" >
-                    ----------------or----------------
-                </div>               
+                <hr/>
 
                 <LocalLogin />
 
