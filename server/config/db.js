@@ -1,3 +1,3 @@
 module.exports = {
-    'url':'mogodb://localhost/authPassport'
+    'url':'mongodb://localhost/authPassport'
 }

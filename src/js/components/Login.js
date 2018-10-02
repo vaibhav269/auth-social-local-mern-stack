@@ -4,6 +4,8 @@ import { GoogleLogin } from 'react-google-login';
 import config from '../../JSON/config.json';
 import '../../css/login.css';
 import LocalLogin from './LocalLogin';
+import {Link} from 'react-router-dom';
+
 
 class Login extends Component{
     constructor(){
@@ -82,7 +84,11 @@ class Login extends Component{
                 <hr/>
 
                 <LocalLogin />
-
+                
+                <hr/>
+                
+                <p>Doesn't have an account? <Link to="/signup">Signup</Link></p>
+                <p>Or go <Link to="/">Home</Link>.</p>
             </div>
         );
         

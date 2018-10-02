@@ -14,7 +14,8 @@ var configDB = require('./server/config/db.js');
 
 //configuration=================================================================
 //database connection
-//mongoose.connect(configDB.url);
+
+mongoose.connect(configDB.url,{useNewUrlParser:true});
 
 
 

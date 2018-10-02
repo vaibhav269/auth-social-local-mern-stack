@@ -21,8 +21,8 @@ class App extends Component{
         return(
             <Router>
                 <div className="container-fluid">
-                    <div className="row">
-                        <Nav />
+                    <div className="row ">
+                        <Nav/>
                     </div>    
                     
                     <div className="row justify-content-center">
