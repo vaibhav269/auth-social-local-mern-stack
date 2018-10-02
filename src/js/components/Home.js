@@ -8,7 +8,7 @@ class Home extends Component{
 
     render(){
         return(
-            <div className="col-12 p-1 mt-5 pt-5">
+            <div className="col-12 p-1 mt-lg-5 pt-5">
                 <div className="text-center heading-custom w-100">Welcome to Node Authentication Window</div>                                           
                 <blockquote className="text-center pt-5 blockquote-custom">
                     <p>

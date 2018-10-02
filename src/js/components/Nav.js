@@ -5,13 +5,23 @@ class Nav extends Component{
     render(){
         return(
             <div className="w-100">
-                <nav className="navbar navbar-dark navbar-expand bg-dark col-12 w-100" >
-                    <ul className="navbar-nav">
-                        <li > <Link to = '/' className="navbar-brand" >Node Auth</Link></li>
-                        <li className="nav-item"> <Link to = '/login' className="nav-link"> Login</Link> </li>
-                        <li className="nav-item"> <Link to = '/signup' className="nav-link"> Signup</Link> </li>
-                        <li className="nav-item"> <Link to = '/' className="nav-link"> Home</Link> </li>
-                    </ul>
+
+                 <nav className="navbar navbar-dark navbar-expand-lg bg-dark justify-content-between" >
+
+                    <Link to = '/' className="navbar-brand" style={{outline:"none"}} >Node Auth</Link>
+                    
+                    <button style={{outline:"none",cursor:"pointer"}} class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+
+                    <div class="collapse navbar-collapse" id="collapsibleNavbar">
+                        <ul className="navbar-nav ">
+                            <li className="nav-item text-center" > <Link style={{outline:"none"}} to = '/login' className="nav-link"> Login</Link> </li>
+                            <li className="nav-item text-center" > <Link style={{outline:"none"}} to = '/signup' className="nav-link"> Signup</Link> </li>
+                            <li className="nav-item text-center" > <Link style={{outline:"none"}} to = '/' className="nav-link"> Home</Link> </li>
+                        </ul>
+                    </div>
+
                 </nav>
             </div>
         )

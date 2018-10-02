@@ -26,7 +26,7 @@ class Signup extends Component{
     
     render(){
         return(
-            <div className="col-lg-3 mt-4 border border-dark" >
+            <div className="col-lg-3 mt-lg-5 border border-dark" >
                 
                 <div className="row bg-dark p-1"
                     style={{color:"white",fontFamily:"Arial, Helvetica, sans-serif",fontWeight:"bolder",fontSize:"150%"}}>
