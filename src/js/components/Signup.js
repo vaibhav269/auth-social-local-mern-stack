@@ -9,16 +9,17 @@ class Signup extends Component{
 
     localSignup(event){
         event.preventDefault();
-        var formData = new Blob([JSON.stringify({formData:new FormData(event.target)},null,2)],{type:'application/json'});
+        var formData = new Blob([JSON.stringify({email:"vai",password:"verma"},null,2)],{type:'application/json'});
+        //var formData = new FormData(event.target);
         const options = {
             method : 'POST',
             body : formData,
             mode : 'cors',
             cache : 'default'
         }
-        fetch('http://localhost:3000/local-signup',options)
+        fetch('http://localhost:3000/api/account/signup',options)
         .then( res=>{
-            res.text().then(
+            res.json().then(
                 (text)=>{ console.log(text);}
             );
         })
@@ -36,8 +37,8 @@ class Signup extends Component{
                 <div className="row justify-content-center pr-3 pl-3 mt-3">
                     <form className="w-100" onSubmit = {this.localSignup}>
                         <div className = "form-group" >
-                            <label >Enter Username</label>
-                            <input type = "text" className="form-control" name="username" />                        
+                            <label >Enter email</label>
+                            <input type = "text" className="form-control" name="email" />                        
                         </div>
 
                         <div className = "form-group" >

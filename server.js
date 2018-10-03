@@ -37,7 +37,7 @@ app.use(flash()); //for flash messages stored in session
 
 
 //routes==========================================================================
-require('./server/app/routes.js')(app,passport) //loading routes and pass app and passport
+require('./server/app/routes/api/signin.js')(app,passport) //loading routes 
 app.post('/hello',function(req,res){
     console.log(req.body);
     var obj = {
@@ -46,8 +46,6 @@ app.post('/hello',function(req,res){
     }
     res.send(obj);
 });
-
-
 
 //launch============================================================================
 app.listen(port,function(){
