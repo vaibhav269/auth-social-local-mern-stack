@@ -9,11 +9,17 @@ class Signup extends Component{
 
     localSignup(event){
         event.preventDefault();
-        var formData = new Blob([JSON.stringify({email:"vai",password:"verma"},null,2)],{type:'application/json'});
-        //var formData = new FormData(event.target);
+        const formData = new FormData(event.target);
+        let jsonObject = {};
+
+        for (const [key, value]  of formData.entries()) {
+            jsonObject[key] = value;
+        }
+
+        var data = new Blob([JSON.stringify(jsonObject,null,2)],{type:'application/json'});
         const options = {
             method : 'POST',
-            body : formData,
+            body : data,
             mode : 'cors',
             cache : 'default'
         }
