@@ -46,7 +46,6 @@ class Signup extends Component{
     
     render(){
         let {isLoading,signupError} = this.state;
-        console.log("sd",signupError);
         return(            
             <div className="col-lg-3 mt-lg-5 border border-dark" >               
                 <div className="row bg-dark p-1"
@@ -80,7 +79,7 @@ class Signup extends Component{
                 <p>Already have an account? <Link to="/login">Login</Link></p>
                 <p>Or go <Link to="/">Home</Link>.</p>
                 {
-                    (isLoading)?(<p>Loading.....</p>):(<p></p>)
+                    (isLoading)?(<p>Loading.....</p>):(null)
                 }
             </div>
         )

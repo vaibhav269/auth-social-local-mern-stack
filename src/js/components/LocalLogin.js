@@ -3,32 +3,64 @@ import React,{Component} from 'react';
 class LocalLogin extends Component{    
      constructor(){
          super();
+         this.state = {
+            isLoading:false,
+            signinError:'',
+            token:''
+        }
+        this.localLogin = this.localLogin.bind(this);
      }
      
      localLogin(event){
         event.preventDefault();
-        var formData = new Blob([JSON.stringify({formData:new FormData(event.target)},null,2)],{type:'application/json'});
+
+        this.setState({isLoading:true});
+
+        const formData = new FormData(event.target);
+        let jsonObject = {};
+
+        for (const [key, value]  of formData.entries()) {
+            jsonObject[key] = value;
+        }
+
+        var data = new Blob([JSON.stringify(jsonObject,null,2)],{type:'application/json'});
         const options = {
             method : 'POST',
-            body : formData,
+            body : data,
             mode : 'cors',
             cache : 'default'
         }
-        fetch('http://localhost:3000/local-login',options)
+        fetch('http://localhost:3000/api/account/signin',options)
         .then( res=>{
-            res.text().then(
-                (text)=>{ console.log(text);}
+            res.json().then(
+                (text)=>{                     
+                    this.setState({isLoading:false});                    
+                    if(text.success == false){
+                        this.setState({signinError:text.message});
+                    }
+                    else if(text.success == true){
+                        this.setState({token:text.token});
+                        console.log(text.token);
+                    }
+                }
             );
         })
     }
 
     render(){
+        let {isLoading,signinError} = this.state;
+        console.log(signinError);
         return(
             <div className="row justify-content-center pr-3 pl-3">
+                
+                <div className = "col-12">
+                    <p className = "bg-danger text-white w-100 text-center"> {signinError} </p>
+                </div>
+
                 <form className="w-100" onSubmit = {this.localLogin}>
                     <div className = "form-group" >
-                        <label >Enter Username</label>
-                        <input type = "text" className="form-control" name="username" />                        
+                        <label >Enter Email</label>
+                        <input type = "text" className="form-control" name="email" />
                     </div>
 
                     <div className = "form-group" >
