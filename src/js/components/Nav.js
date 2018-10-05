@@ -3,6 +3,7 @@ import {Link} from 'react-router-dom';
 
 class Nav extends Component{
     render(){
+        let {navData} = this.props;        
         return(
             <div className="w-100">
 
@@ -16,9 +17,24 @@ class Nav extends Component{
 
                     <div className="collapse navbar-collapse" id="collapsibleNavbar">
                         <ul className="navbar-nav ">
-                            <li className="nav-item text-center" > <Link style={{outline:"none"}} to = '/login' className="nav-link"> Login</Link> </li>
-                            <li className="nav-item text-center" > <Link style={{outline:"none"}} to = '/signup' className="nav-link"> Signup</Link> </li>
-                            <li className="nav-item text-center" > <Link style={{outline:"none"}} to = '/' className="nav-link"> Home</Link> </li>
+                            {
+                                navData.map(navEle=>{
+                                    return (
+                                        <li 
+                                            className="nav-item text-center" 
+                                            key ={navEle.key}> 
+                                            <Link 
+                                                style={{outline:"none"}} 
+                                                to = {navEle.to} 
+                                                className="nav-link"
+                                            > 
+                                                    {navEle.name}
+                                            </Link> 
+                                        </li>
+                                    )
+                                })                                
+                            }
+                            
                         </ul>
                     </div>
 

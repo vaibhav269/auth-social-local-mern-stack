@@ -16,11 +16,19 @@ import {
 class App extends Component{
     constructor(){
         super();
+        
+        this.navData = [
+                            {to:'/login',name:'Login',key:1},
+                            {to:'/signup',name:'signup',key:2},
+                            {to:'/',name:'Home',key:3}
+                            ];
+        
         this.state = {
             token : '',
-            isLoading:false
+            isLoading:false,            
         }
         this.isLoading = this.isLoading.bind(this);
+        
     }
 
     componentDidMount(){
@@ -68,7 +76,7 @@ class App extends Component{
                         ):(
                             <div className="container-fluid">
                                 <div className="row ">
-                                    <Nav/>
+                                    <Nav navData = {this.navData}/>
                                 </div>
                                 
                                 <div className="row justify-content-center">
