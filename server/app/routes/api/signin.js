@@ -147,8 +147,8 @@ module.exports = function(app){
         });
     });
 
-    app.get('api/account/verify',function(req,res,next){
-        const {token} = req.query;
+    app.get('/api/account/verify',function(req,res,next){
+        const {token} = req.query;        
         UserSession.find({
             _id:token,
             isDeleted:false
