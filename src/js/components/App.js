@@ -17,18 +17,35 @@ class App extends Component{
     constructor(){
         super();
         
-        this.navData = [
-                            {to:'/login',name:'Login',key:1},
-                            {to:'/signup',name:'signup',key:2},
-                            {to:'/',name:'Home',key:3}
-                            ];
+        this.navNoSessionRouteData = [
+                            {to:'/login',name:'Login',key:'r1'},
+                            {to:'/signup',name:'signup',key:'r2'},
+                            {to:'/',name:'Home',key:'r3'}
+                        ];
+        this.navNoSessionButtonData = [];
+
+
+        this.navSessionRouteData = [
+                            {to:'/login',name:'Logout',key:'r1'},
+                            {to:'/signup',name:'Delete',key:'r2'},
+                            {to:'/',name:'Home',key:'r3'}
+                        ];                                
+        this.navSessionButtonData = [
+                            {onClick:this.logout,name:'Logout',key:'b1'}
+                        ];
         
         this.state = {
             token : '',
-            isLoading:false,            
+            isLoading:false,
+            navRouteData: this.navNoSessionRouteData,
+            navButtonData : this.navNoSessionButtonData
         }
         this.isLoading = this.isLoading.bind(this);
         
+    }
+
+    logout(){
+        alert('logged out');
     }
 
     componentDidMount(){
@@ -47,7 +64,9 @@ class App extends Component{
                 .then(json=>{
                     if(json.success){
                         this.setState({
-                            token : tokenVar
+                            token : tokenVar,
+                            navRouteData:this.navSessionRouteData,
+                            navButtonData:this.navSessionButtonData
                         });
                     }else{
                         console.log(json.message);
@@ -60,7 +79,7 @@ class App extends Component{
     }
 
     isLoading(){
-        let {isLoading,token} = this.state;
+        let {isLoading,token,navRouteData,navButtonData} = this.state;
 
         if(isLoading === true){
             return (
@@ -69,27 +88,22 @@ class App extends Component{
         }
         else{
             return(            
-                <Router>
-                    {
-                        (token) ? (
-                            <Profile/>
-                        ):(
-                            <div className="container-fluid">
-                                <div className="row ">
-                                    <Nav navData = {this.navData}/>
-                                </div>
+                <div>                                                                                                
+                    <div className="container-fluid">
+                        <div className="row ">
+                            <Nav navRouteData = {navRouteData}  navButtonData = {navButtonData}/>
+                        </div>
                                 
-                                <div className="row justify-content-center">
-                                    <Switch>
-                                        <Route exact path="/" component={Home} />
-                                        <Route path = "/login" component={Login}/>
-                                        <Route path = "/signup" component={Signup}/>
-                                    </Switch>
-                                </div>
-                            </div>
-                        )
-                    }                
-                </Router>
+                        <div className="row justify-content-center">
+                            <Switch>
+                                <Route exact path="/" component={Home} />                                        
+                                <Route path = "/login" component={Login}/>
+                                <Route path = "/signup" component={Signup}/>
+                                <Route path = "/profile" component={Profile}/>
+                            </Switch>
+                        </div>
+                    </div>                                                         
+                </div>
             )
         }
     }

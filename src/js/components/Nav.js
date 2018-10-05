@@ -3,11 +3,11 @@ import {Link} from 'react-router-dom';
 
 class Nav extends Component{
     render(){
-        let {navData} = this.props;        
+        let {navRouteData,navButtonData} = this.props;        
         return(
             <div className="w-100">
 
-                 <nav className="navbar navbar-dark navbar-expand-lg bg-dark justify-content-between" >
+                 <nav className="navbar navbar-dark navbar-expand-lg bg-dark" >
 
                     <Link to = '/' className="navbar-brand" style={{outline:"none"}} >Node Auth</Link>
                     
@@ -16,9 +16,9 @@ class Nav extends Component{
                     </button>
 
                     <div className="collapse navbar-collapse" id="collapsibleNavbar">
-                        <ul className="navbar-nav ">
+                        <ul className="navbar-nav mr-auto">
                             {
-                                navData.map(navEle=>{
+                                navRouteData.map(navEle=>{
                                     return (
                                         <li 
                                             className="nav-item text-center" 
@@ -32,9 +32,22 @@ class Nav extends Component{
                                             </Link> 
                                         </li>
                                     )
-                                })                                
+                                })
                             }
-                            
+                        </ul>
+                        
+                        <ul className = "navbar-nav ml-auto">
+                            {
+                                navButtonData.map(navButton=>{
+                                    return(
+                                        <li className = "nav-item text-center" key = {navButton.key}>
+                                            <button className = "btn btn-danger" onClick={navButton.onClick}>
+                                                {navButton.name}
+                                            </button>
+                                        </li>
+                                    )
+                                })
+                            }
                         </ul>
                     </div>
 
