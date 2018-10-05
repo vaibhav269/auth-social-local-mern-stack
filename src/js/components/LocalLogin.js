@@ -5,8 +5,7 @@ class LocalLogin extends Component{
          super();
          this.state = {
             isLoading:false,
-            signinError:'',
-            token:''
+            signinError:''            
         }
         this.localLogin = this.localLogin.bind(this);
      }
@@ -34,13 +33,17 @@ class LocalLogin extends Component{
         .then( res=>{
             res.json().then(
                 (text)=>{                     
-                    this.setState({isLoading:false});                    
+                    this.setState({isLoading:false});        
                     if(text.success == false){
                         this.setState({signinError:text.message});
                     }
-                    else if(text.success == true){
-                        this.setState({token:text.token});
-                        console.log(text.token);
+                    else if(text.success == true){                        
+                        try{
+                            localStorage.token=text.token;
+                            console.log('session set',localStorage.token);
+                        }catch(err){
+                            console.log("Error : can't stablish session",err);
+                        }                                            
                     }
                 }
             );
@@ -49,7 +52,6 @@ class LocalLogin extends Component{
 
     render(){
         let {isLoading,signinError} = this.state;
-        console.log(signinError);
         return(
             <div className="row justify-content-center pr-3 pl-3">
                 
