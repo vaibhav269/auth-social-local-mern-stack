@@ -26,9 +26,7 @@ class App extends Component{
 
 
         this.navSessionRouteData = [
-                            {to:'/login',name:'Logout',key:'r1'},
-                            {to:'/signup',name:'Delete',key:'r2'},
-                            {to:'/',name:'Home',key:'r3'}
+                            {to:'/profile',name:'Profile',key:'r1'},
                         ];                                
         this.navSessionButtonData = [
                             {onClick:this.logout,name:'Logout',key:'b1'}
@@ -67,7 +65,7 @@ class App extends Component{
                             token : tokenVar,
                             navRouteData:this.navSessionRouteData,
                             navButtonData:this.navSessionButtonData
-                        });
+                        });                        
                     }else{
                         console.log(json.message);
                     }
@@ -108,13 +106,12 @@ class App extends Component{
         }
     }
 
-    render(){                
-        return(
+    render(){              
+        return(            
             <div>
                 {this.isLoading()}
             </div>
         )
     }
-
 }
 export default App;
