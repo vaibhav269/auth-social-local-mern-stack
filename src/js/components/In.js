@@ -25,10 +25,19 @@ class In extends Component{
     }
 
     logout(){
+        const tokenVar = localStorage.getItem('token');
         localStorage.setItem('token','');
-        this.setState({
-            token:''
-        })
+         fetch('http://localhost:3000/api/account/logout?token='+tokenVar)
+            .then(res=>res.json())
+            .then(json=>{
+                if(json.success){
+                    this.setState({
+                        token : ''
+                    });                    
+                }else{
+                   alert('logout error');
+                }
+            });        
     }
 
     componentWillMount(){
