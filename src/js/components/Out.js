@@ -18,7 +18,9 @@ class Out extends Component{
         
         this.state = {
             token : '',
-            isLoading:false                        
+            navNoSessionButtonData :[],
+            navNoSessionRouteData:[],
+            isLoading:false            
         }
         this.isLoading = this.isLoading.bind(this);
     }
@@ -27,51 +29,43 @@ class Out extends Component{
         alert('logged out');
     }
 
-    componentWillMount(){
-        let {match} = this.props;
-        console.log(match);
-        this.navNoSessionRouteData = [
-            {to:`${match.url}login`,name:'Login',key:'r1'},
-            {to:`${match.url}signup`,name:'signup',key:'r2'},
-            {to:`${match.url}`,name:'Home',key:'r3'}
-        ];
-
-        this.navNoSessionButtonData = [];
-    }
-
     componentDidMount(){
+        let {match} = this.props;
+        this.setState({
+            navNoSessionRouteData : [
+                {to:`${match.url}login`,name:'Login',key:'r1'},
+                {to:`${match.url}signup`,name:'signup',key:'r2'},
+                {to:`${match.url}`,name:'Home',key:'r3'}
+            ],
+            navNoSessionButtonData : [],
+            isLoading:true
+        }) 
+
         const tokenVar = localStorage.getItem('token');
         if(tokenVar == null){
-            console.log('not logged in');
-        }else{
-            console.log('logged in');
-
             this.setState({
-                isLoading:true
+                isLoading:false
             });
-
+        }else{            
             fetch('http://localhost:3000/api/account/verify?token='+tokenVar)
             .then(res=>res.json())
             .then(json=>{
                 if(json.success){
                     this.setState({
                         token : tokenVar,
-                    });
+                        isLoading:false
+                    });                    
                 }else{
-                    console.log(json.message);
+                    this.setState({                 
+                        isLoading:false,
+                    });
                 }
-                this.setState({
-                    isLoading:false
-                });
             });
         }
     }
     
     isLoading(){
-        let {isLoading,token} = this.state;        
-        let min = 5;
-        let max = 10;
-        let ram = Math.floor(Math.random() * (+max - +min)) + +min;
+        let {isLoading,token,navNoSessionButtonData,navNoSessionRouteData} = this.state;
         if(isLoading === true){
             return (
                 <p>Loading...</p>
@@ -81,12 +75,12 @@ class Out extends Component{
             let {match} = this.props            
             return(
                 <div>
-                    { 
-                        (ram>8)?<Redirect to={{pathname: '/In', state: {from: this.props.location}}} />:null
-                    }   
-                    <div className = "row">                                     
-                        <Nav navRouteData = {this.navNoSessionRouteData}  navButtonData = {this.navNoSessionButtonData}/>
-                    </div>    
+                    {
+                        (token)?<Redirect to={{pathname: '/In', state: {from: this.props.location}}} />:(null)
+                    }
+                    <div className = "row">
+                        <Nav navRouteData = {navNoSessionRouteData}  navButtonData = {navNoSessionButtonData}/>
+                    </div>
                         <div className="row justify-content-center">
                             <Switch>
                                 <Route exact = {true} path={`${match.path}`} component={Home} />
@@ -103,7 +97,7 @@ class Out extends Component{
     render(){    
         return(
             <div>
-                { this.isLoading()}
+                {this.isLoading()}
             </div>
         )
     }
