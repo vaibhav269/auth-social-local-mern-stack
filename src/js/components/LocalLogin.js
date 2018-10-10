@@ -39,8 +39,8 @@ class LocalLogin extends Component{
                     }
                     else if(text.success == true){                        
                         try{
-                            localStorage.token=text.token;
-                            console.log('session set',localStorage.token);
+                            localStorage.token=text.token;                            
+                            this.props.setToken(text.token);
                         }catch(err){
                             console.log("Error : can't stablish session",err);
                         }                                            

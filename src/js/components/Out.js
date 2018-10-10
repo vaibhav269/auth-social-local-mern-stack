@@ -23,10 +23,22 @@ class Out extends Component{
             isLoading:false            
         }
         this.isLoading = this.isLoading.bind(this);
+        this.setToken = this.setToken.bind(this);
+        this.getToken = this.getToken.bind(this);
     }
 
     logout(){
         alert('logged out');
+    }
+
+    setToken(tok){
+        this.setState({
+            token:tok
+        })
+    }
+    
+    getToken(){
+        return this.state.token;
     }
 
     componentDidMount(){
@@ -84,8 +96,8 @@ class Out extends Component{
                         <div className="row justify-content-center">
                             <Switch>
                                 <Route exact = {true} path={`${match.path}`} component={Home} />
-                                <Route path={`${match.path}login`} component={Login}/>
-                                <Route path={`${match.path}signup`} component={Signup}/>
+                                <Route path={`${match.path}login`} render={(props) => <Login setToken={this.setToken} {...props} getToken = {this.getToken} /> } />
+                                <Route path={`${match.path}signup`} render={(props) => <Signup setToken={this.setToken} {...props} getToken = {this.getToken} />} />
                             </Switch>
                         </div>
                 </div>

@@ -83,7 +83,7 @@ class Login extends Component{
                 
                 <hr/>
 
-                <LocalLogin />
+                <LocalLogin setToken={this.props.setToken} getToken = {this.props.getToken} />
                 
                 <hr/>
                 
