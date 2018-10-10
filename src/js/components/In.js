@@ -21,13 +21,17 @@ class In extends Component{
             isLoading:false            
         }
         this.isLoading = this.isLoading.bind(this);
+        this.logout = this.logout.bind(this);
     }
 
     logout(){
-        alert("logged out");
+        localStorage.setItem('token','');
+        this.setState({
+            token:''
+        })
     }
 
-    componentDidMount(){
+    componentWillMount(){
         let {match} = this.props;
         this.setState({
             navSessionRouteData : [                
@@ -40,6 +44,7 @@ class In extends Component{
         const tokenVar = localStorage.getItem('token');
         if(tokenVar == null){
             this.setState({
+                token:'',
                 isLoading:false
             });
         }else{            
@@ -52,7 +57,8 @@ class In extends Component{
                         isLoading:false
                     });                    
                 }else{
-                    this.setState({                 
+                    this.setState({    
+                        token:'',             
                         isLoading:false,
                     });
                 }
@@ -68,11 +74,11 @@ class In extends Component{
             );
         }
         else{
-            let {match} = this.props            
+            let {match} = this.props
             return(
                 <div>
                     {
-                        (token)?(null):<Redirect to={{pathname: '/In', state: {from: this.props.location}}} />
+                        (token)?(null):<Redirect to={{pathname: '/' }} />
                     }
                     <div className = "row">
                         <Nav navRouteData = {navSessionRouteData}  navButtonData = {navSessionButtonData}/>
