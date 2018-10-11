@@ -45,11 +45,11 @@ class Login extends Component{
             fetch('http://localhost:3000/hello',options)
                 .then( r=>{
                     const token = r.headers.get('x-auth-token');          
-                        r.json().then(user => {
-                            if(token){
-                                this.setState({isAuthenticated:true,user,token})
-                            }
-                        });
+                        // r.json().then(user => {
+                        //     if(token){
+                        //         this.setState({isAuthenticated:true,user,token})
+                        //     }
+                        // });
             })
     }
 

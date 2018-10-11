@@ -38,7 +38,7 @@ app.use(flash()); //for flash messages stored in session
 
 //routes==========================================================================
 require('./server/app/routes/api/signin.js')(app,passport) //loading routes 
-app.get('/hello',function(req,res){
+app.post('/hello',function(req,res){
     console.log('Get  Worked');
     var obj = {
         name:"vaibhav",
