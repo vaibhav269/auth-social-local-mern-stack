@@ -43,8 +43,9 @@ class Login extends Component{
                 cache : 'default'
             };
             fetch('http://localhost:3000/hello',options)
-                .then( r=>{
-                    const token = r.headers.get('x-auth-token');          
+                .then(r=>{
+                    r.json().then((text)=>{console.log(text)})
+                   // const token = r.headers.get('x-auth-token');          
                         // r.json().then(user => {
                         //     if(token){
                         //         this.setState({isAuthenticated:true,user,token})
