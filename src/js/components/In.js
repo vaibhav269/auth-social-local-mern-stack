@@ -57,7 +57,7 @@ class In extends Component{
                 isLoading:false
             });
         }else{            
-            fetch('http://localhost:3000/api/account/verify?token='+tokenVar)
+            fetch('/api/account/verify?token='+tokenVar)
             .then(res=>res.json())
             .then(json=>{
                 if(json.success){
@@ -94,7 +94,7 @@ class In extends Component{
                     </div>
                         <div className="row justify-content-center">
                             <Switch>
-                                <Route exact = {true} path={`${match.path}`} component={Profile} />                                
+                                <Route exact = {true} path={`${match.path}`} render={(props) => <Profile setToken={this.setToken} {...props} getToken = {this.getToken} /> } />
                             </Switch>
                         </div>
                 </div>

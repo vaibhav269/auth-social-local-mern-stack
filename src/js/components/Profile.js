@@ -4,7 +4,17 @@ class Profile extends Component{
     constructor(){
         super();        
     }
-    render(){
+    
+    componentDidMount(){
+        const tokenVar = localStorage.getItem('token');
+        fetch('/api/account/getUserData?token='+tokenVar)
+            .then(res=>res.json())
+            .then(json=>{
+                console.log(json);
+            });
+    }
+
+    render(){        
         return(
             <div className="row">
                 <div className="col-12">

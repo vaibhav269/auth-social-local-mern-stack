@@ -53,13 +53,13 @@ class Out extends Component{
             isLoading:true
         }) 
 
-        const tokenVar = localStorage.getItem('token');
-        if(tokenVar == null){
+        const tokenVar = localStorage.getItem('token');        
+        if(tokenVar === null || tokenVar === ""){
             this.setState({
                 isLoading:false
             });
         }else{            
-            fetch('http://localhost:3000/api/account/verify?token='+tokenVar)
+            fetch('/api/account/verify?token='+tokenVar)
             .then(res=>res.json())
             .then(json=>{
                 if(json.success){
