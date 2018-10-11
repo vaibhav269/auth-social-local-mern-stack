@@ -42,7 +42,7 @@ class Login extends Component{
                 mode:'cors',
                 cache : 'default'
             };
-            fetch('http://localhost:3000/api/v1/auth/google',options)
+            fetch('http://localhost:3000/hello',options)
                 .then( r=>{
                     const token = r.headers.get('x-auth-token');          
                         r.json().then(user => {
