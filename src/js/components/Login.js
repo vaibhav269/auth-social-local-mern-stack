@@ -21,7 +21,7 @@ class Login extends Component{
             mode:'cors',
             cache : 'default'
         };
-        fetch('http://localhost:3000/hello',options)
+        fetch('/hello',options)
             .then( r=>{
                 r.json().then((text)=>{console.log(text)})
                 // const token = r.headers.get('x-auth-token');          
@@ -42,7 +42,7 @@ class Login extends Component{
                 mode:'cors',
                 cache : 'default'
             };
-            fetch('http://localhost:3000/hello',options)
+            fetch('/hello',options)
                 .then(r=>{
                     r.json().then((text)=>{console.log(text)})
                    // const token = r.headers.get('x-auth-token');          
