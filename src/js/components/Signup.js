@@ -31,7 +31,7 @@ class Signup extends Component{
             mode : 'cors',
             cache : 'default'
         }
-        fetch('http://localhost:3000/api/account/signup',options)
+        fetch('/api/account/signup',options)
         .then( res=>{
             res.json().then(
                 (text)=>{                     

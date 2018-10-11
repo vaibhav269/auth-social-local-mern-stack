@@ -27,7 +27,7 @@ class In extends Component{
     logout(){
         const tokenVar = localStorage.getItem('token');
         localStorage.setItem('token','');
-         fetch('http://localhost:3000/api/account/logout?token='+tokenVar)
+         fetch('/api/account/logout?token='+tokenVar)
             .then(res=>res.json())
             .then(json=>{
                 if(json.success){

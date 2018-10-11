@@ -29,7 +29,7 @@ class LocalLogin extends Component{
             mode : 'cors',
             cache : 'default'
         }
-        fetch('http://localhost:3000/api/account/signin',options)
+        fetch('/api/account/signin',options)
         .then( res=>{
             res.json().then(
                 (text)=>{                     
