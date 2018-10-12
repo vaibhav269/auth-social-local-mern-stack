@@ -7,7 +7,8 @@ class Signup extends Component{
         super();
         this.state = {
             isLoading:false,
-            signupError:''
+            signupError:'',
+            signupSuccess:false
         }
         this.localSignup = this.localSignup.bind(this);
     }
@@ -36,25 +37,51 @@ class Signup extends Component{
             res.json().then(
                 (text)=>{                     
                     this.setState({isLoading:false});                    
-                    if(text.success == false){
-                        this.setState({signupError:text.message});                        
+                    if(text.success === false){
+                        this.setState({
+                                signupError:text.message,
+                                signupSuccess:false
+                            });
                     }
+                    else if(text.success === true){
+                        this.setState({
+                            signupError:'',
+                            signupSuccess:true
+                        });
+                    }
+
                 }
             );
         })
     }
     
     render(){
-        let {isLoading,signupError} = this.state;
+        let {isLoading,signupError,signupSuccess} = this.state;
+        let error = false;
+        let showMsg = false;
+        if(signupError != '' && signupSuccess === false){
+            error = true;
+            showMsg = true;
+        }else if(signupError == '' && signupSuccess === true){
+            error = false;
+            showMsg = true;
+        }
+
         return(            
             <div className="col-lg-3 mt-lg-5 border border-dark" >               
                 <div className="row bg-dark p-1"
                     style={{color:"white",fontFamily:"Arial, Helvetica, sans-serif",fontWeight:"bolder",fontSize:"150%"}}>
                     <p className="w-100 text-center m-0">Signup</p>
                 </div>
-                
+                                
                 <div className = "row">
-                    <p className = "bg-danger text-white w-100 text-center"> {signupError} </p>                
+                {
+                    (showMsg)?(
+                        (error)?
+                            (<p className = "bg-danger text-white w-100 text-center"> {signupError} </p>):
+                            (<p className = "bg-success text-white w-100 text-center"> Signup successfull go to login page to login </p>)
+                    ):(null)
+                }                
                 </div>
 
                 <div className="row justify-content-center pr-3 pl-3 mt-3">
