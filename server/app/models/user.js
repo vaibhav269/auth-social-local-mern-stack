@@ -18,6 +18,18 @@ var userSchema = mongoose.Schema({
       signUpDate: {
         type: Date,
         default: Date.now()
+      },
+      facebookProvider: {
+        type: {
+              id: String,
+              token: String
+        },        
+      },
+      googleProvider: {
+        type: {
+             id: String,
+             token: String
+        },        
       }
 });
 

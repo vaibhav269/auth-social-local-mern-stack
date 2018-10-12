@@ -15,6 +15,7 @@ class Login extends Component{
     facebookResponse(response){
         const tokenBlob = new Blob([JSON.stringify({access_token:
         response.accessToken},null,2)],{type:'application/json'});
+        console.log(response);
         const options = {
             method: 'POST',
             body :tokenBlob,
@@ -34,15 +35,15 @@ class Login extends Component{
     }
 
     googleResponse(response){
-        const tokenBlob = new Blob([JSON.stringify({access_token:
-            response.accessToken},null,2)],{type:'application/json'});
+            const tokenBlob = new Blob([JSON.stringify({idToken:
+            response.tokenId},null,2)],{type:'application/json'});            
             const options = {
                 method: 'POST',
                 body :tokenBlob,
                 mode:'cors',
                 cache : 'default'
             };
-            fetch('/hello',options)
+            fetch('/api/account/signInGoogle',options)
                 .then(r=>{
                     r.json().then((text)=>{console.log(text)})
                    // const token = r.headers.get('x-auth-token');          

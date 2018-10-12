@@ -1,9 +1,63 @@
 const User = require('../../models/user');
 const UserSession = require('../../models/userSession');
 var bodyParser = require('body-parser');
+const {OAuth2Client} = require('google-auth-library');
 
-module.exports = function(app){   
-    
+const CLIENT_ID = '745747889746-u2rk5tn1b86veevlih319uv0iiuin4a0.apps.googleusercontent.com';
+const client = new OAuth2Client(CLIENT_ID);
+
+async function verifyGoogle(token) {
+    console.log(token);
+    const ticket = await client.verifyIdToken({
+    idToken: token,
+    audience: CLIENT_ID,  // Specify the CLIENT_ID of the app that accesses the backend
+    // Or, if multiple clients access the backend:
+    //[CLIENT_ID_1, CLIENT_ID_2, CLIENT_ID_3]
+  });
+  const payload = ticket.getPayload();
+  const userid = payload['sub'];
+  return payload;
+  
+}
+
+module.exports = function(app){       
+    app.post('/api/account/signInGoogle',function(req,res,next){
+        const payload = verifyGoogle(req.body.idToken).then(payload=>{console.log(payload)}).catch(console.error);
+        User.find({
+            email:payload['email']
+        },function(err,previousUsers){
+            if(err){
+                return res.send({
+                    success:false,
+                    message:'Error : serve error'
+                });
+            }
+            else if(previousUsers.length > 0 ){
+                return res.send({
+                    success:true,
+                    message:'old user'
+                });
+            }
+
+            const newUser = new User();
+            newUser.email = payload['email'];
+
+            newUser.save((err,user) =>{
+                if(err){
+                    return res.send({
+                        success:false,
+                        message:'Error:serve error'
+                    });
+                }
+                return res.send({
+                    success:true,
+                    message:'Signed Up'
+                });
+            });
+
+        });
+    });
+
     app.post('/api/account/signup',function(req,res,next){
         const password = req.body.password;
         let email = req.body.email;
