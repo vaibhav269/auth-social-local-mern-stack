@@ -4,59 +4,110 @@ var bodyParser = require('body-parser');
 const {OAuth2Client} = require('google-auth-library');
 
 const CLIENT_ID = '745747889746-u2rk5tn1b86veevlih319uv0iiuin4a0.apps.googleusercontent.com';
-const client = new OAuth2Client(CLIENT_ID);
+const CLIENT_SECRET = 'S2QzHZ5hvn0rOppDGwxMJE_d';
+const REDIRECT_URI = 'http://localhost:3000';
 
 async function verifyGoogle(token) {
-    console.log(token);
+    const client = new OAuth2Client(CLIENT_ID);
     const ticket = await client.verifyIdToken({
     idToken: token,
-    audience: CLIENT_ID,  // Specify the CLIENT_ID of the app that accesses the backend
+    audience: CLIENT_ID    
+    // Specify the CLIENT_ID of the app that accesses the backend
     // Or, if multiple clients access the backend:
     //[CLIENT_ID_1, CLIENT_ID_2, CLIENT_ID_3]
   });
   const payload = ticket.getPayload();
   const userid = payload['sub'];
-  return payload;
-  
+  return payload;  
 }
 
-module.exports = function(app){       
-    app.post('/api/account/signInGoogle',function(req,res,next){
-        const payload = verifyGoogle(req.body.idToken).then(payload=>{console.log(payload)}).catch(console.error);
-        User.find({
-            email:payload['email']
-        },function(err,previousUsers){
-            if(err){
-                return res.send({
-                    success:false,
-                    message:'Error : serve error'
-                });
-            }
-            else if(previousUsers.length > 0 ){
-                return res.send({
-                    success:true,
-                    message:'old user'
-                });
-            }
+module.exports = function(app){
+    app.post('/api/account/signInGoogle',function(req,res,next){            
+            const oauth2Client = new OAuth2Client(CLIENT_ID,CLIENT_SECRET,REDIRECT_URI);
+            var code = req.body.code; // the query param code
+            oauth2Client.getToken(code, function(err, tokens) {           
+              // Now tokens contains an access_token and an optional refresh_token. Save them.
+                if(!err) {
+                    verifyGoogle(tokens.id_token).then(payload=>{
+                        
+                        User.find({
+                            email:payload['email']
+                        },function(err,previousUsers){
+                            if(err){
+                                return res.send({
+                                    success:false,
+                                    message:'Error1 : serve error'
+                                });
+                            }
+                            else if(previousUsers.length > 0 ){
+                                const user = previousUsers[0];
+                                const userSession = new UserSession();
+                                userSession.userId = previousUsers[0]._id;
+                                userSession.save(function(err,doc){
+                                    if(err){
+                                        console.log(err);
+                                        return res.send({
+                                            success:false,
+                                            message:'Error:server error'
+                                        });
+                                    }
+                                    else{
+                                        return res.send({
+                                            success:true,
+                                            message:'Valid sign in',
+                                            token:doc._id
+                                        });
+                                    }                                                        
+                                });
+                            }
+                            
+                            else{                            
+                                const newUser = new User();
+                                newUser.email = payload['email'];
 
-            const newUser = new User();
-            newUser.email = payload['email'];
+                                newUser.googleProvider = tokens.refresh_token;
+                                newUser.save((err,user) =>{
+                                    if(err){
+                                        return res.send({
+                                            success:false,
+                                            message:'Error2:serve error'
+                                        });
+                                    }
+                                    const userSession = new UserSession();
+                                    userSession.userId = user._id;
+                                    userSession.save(function(err,doc){
+                                        if(err){
+                                            console.log(err);
+                                            return res.send({
+                                                success:false,
+                                                message:'Error:server error'
+                                            });
+                                        }
+                                        return res.send({
+                                            success:true,
+                                            message:'valid sign up',
+                                            token:doc._id
+                                        });
 
-            newUser.save((err,user) =>{
-                if(err){
-                    return res.send({
+                                    });
+                            });}
+                        });
+                    }).catch((err)=>{
+                        return res.send({
+                            success:false,
+                            message:'Error : Some error occured'
+                        })
+                    })
+                }
+                else{
+                    res.send({
                         success:false,
-                        message:'Error:serve error'
+                        message:'Error: Token invalid'
                     });
                 }
-                return res.send({
-                    success:true,
-                    message:'Signed Up'
-                });
             });
-
-        });
     });
+
 
     app.post('/api/account/signup',function(req,res,next){
         const password = req.body.password;

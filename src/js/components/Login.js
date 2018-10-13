@@ -35,8 +35,9 @@ class Login extends Component{
     }
 
     googleResponse(response){
-            const tokenBlob = new Blob([JSON.stringify({idToken:
-            response.tokenId},null,2)],{type:'application/json'});            
+            console.log(response);
+            const tokenBlob = new Blob([JSON.stringify({code:
+            response.code},null,2)],{type:'application/json'});
             const options = {
                 method: 'POST',
                 body :tokenBlob,
@@ -79,6 +80,8 @@ class Login extends Component{
                             buttonText="Google"
                             onSuccess={this.googleResponse}
                             onFailure={this.googleResponse}
+                            responseType = 'code'
+                            accessType = 'offline'
                             className="google-login-button p-2"
                     />
                 </div> 
