@@ -1,6 +1,6 @@
 import React,{Component} from 'react';
 import FacebookLogin from 'react-facebook-login';
-import LoginGoogle from './GoogleLogin';
+import LoginGoogle from './LoginGoogle';
 import config from '../../JSON/config.json';
 import '../../css/login.css';
 import LocalLogin from './LocalLogin';
@@ -53,11 +53,17 @@ class Login extends Component{
                                 cssClass = "facebook-login-button p-2"
                                 textButton = "Facebook"
                     /> 
-                     <LoginGoogle />
+                     <LoginGoogle 
+                         setToken = {this.props.setToken} 
+                         getToken = {this.props.getToken}
+                     />
                 </div>                    
                 <hr/>
 
-                <LocalLogin setToken={this.props.setToken} getToken = {this.props.getToken} />
+                <LocalLogin 
+                    setToken = {this.props.setToken} 
+                    getToken = {this.props.getToken} 
+                />
                 
                 <hr/>
                 

@@ -5,10 +5,15 @@ import config from '../../JSON/config.json';
 export default class LoginGoogle extends Component{
     constructor(){
         super();
+        this.state = {
+            isLoading:false,
+            signinError:''            
+        }
+        this.googleResponse = this.googleResponse.bind(this);
     }
 
     googleResponse(response){
-        console.log(response);
+        this.setState({isLoading:true});
         const tokenBlob = new Blob([JSON.stringify({code:
         response.code},null,2)],{type:'application/json'});
         const options = {
@@ -18,10 +23,22 @@ export default class LoginGoogle extends Component{
             cache : 'default'
         };
         fetch('/api/account/signInGoogle',options)
-            .then(r=>{
-                r.json()
-                    .then( (text) => console.log(text))
-        })
+            .then(r=>r.json())
+            .then( (text) => {
+                this.setState({isLoading:false});        
+                    if(text.success == false){
+                        this.setState({signinError:text.message});
+                    }
+                    else if(text.success == true){                        
+                        try{
+                            localStorage.token=text.token;                            
+                            this.props.setToken(text.token);
+                        }catch(err){
+                            console.log("Error : can't stablish session",err);
+                        }                                            
+                    }
+            })
+        
     }
     render(){
         return(
