@@ -24,13 +24,7 @@ class Login extends Component{
         };
         fetch('/hello',options)
             .then( r=>{
-                r.json().then((text)=>{console.log(text)})
-                // const token = r.headers.get('x-auth-token');          
-                //     r.json().then(user => {
-                //         if(token){
-                //             this.setState({isAuthenticated:true,user,token})
-                //         }
-                //     });
+                r.json().then((text)=>{console.log(text)})                
         })
     }
 
@@ -46,12 +40,13 @@ class Login extends Component{
                     <p className="w-100 text-center m-0">Login</p>
                 </div>        
                 <div className="row justify-content-around mt-3">
-                    <FacebookLogin appId = {config.FACEBOOK_APP_ID}
-                                autoLoad={false}
-                                fields = "name,email,picture"
-                                callback = {this.facebookResponse}
-                                cssClass = "facebook-login-button p-2"
-                                textButton = "Facebook"
+                    <FacebookLogin 
+                        appId = {config.FACEBOOK_APP_ID}
+                        autoLoad={false}
+                        fields = "name,email,picture"
+                        callback = {this.facebookResponse}
+                        cssClass = "facebook-login-button p-2"
+                        textButton = "Facebook"
                     /> 
                      <LoginGoogle 
                          setToken = {this.props.setToken} 
