@@ -1,10 +1,6 @@
 const User = require('../../models/user');
 const UserSession = require('../../models/userSession');
 var bodyParser = require('body-parser');
-const {OAuth2Client} = require('google-auth-library');
-const CLIENT_ID = '745747889746-u2rk5tn1b86veevlih319uv0iiuin4a0.apps.googleusercontent.com';
-const CLIENT_SECRET = 'S2QzHZ5hvn0rOppDGwxMJE_d';
-const REDIRECT_URI = 'http://localhost:3000';
 
 const setSession = require('../../utils/setSession');
 

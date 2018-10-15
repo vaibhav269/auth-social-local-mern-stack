@@ -22,7 +22,7 @@ class Login extends Component{
             mode:'cors',
             cache : 'default'
         };
-        fetch('/hello',options)
+        fetch('/api/account/signinFacebook',options)
             .then( r=>{
                 r.json().then((text)=>{console.log(text)})                
         })
