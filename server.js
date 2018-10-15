@@ -37,7 +37,10 @@ app.use(flash()); //for flash messages stored in session
 
 
 //routes==========================================================================
-require('./server/app/routes/api/signin.js')(app,passport) //loading routes 
+require('./server/app/routes/api/signin.js')(app) 
+require('./server/app/routes/api/signup.js')(app)
+
+
 app.post('/hello',function(req,res){
     console.log("i came here");
     let access_token = req.body.access_token;
@@ -45,41 +48,18 @@ app.post('/hello',function(req,res){
     let app_secret = 'a799c00dea6f43950078f51f7e67d385';
 
     fetch(`https://graph.facebook.com/oauth/access_token?grant_type=fb_exchange_token&client_id=${app_id}&client_secret=${app_secret}&fb_exchange_token=${access_token}`)
-        .then(res=>res.json())
+        .then(resp=>resp.json())
         .then((json)=>{
-            console.log(json)
+            let long_access_token = json.access_token;            
+            return fetch(`https://graph.facebook.com/me?access_token=${long_access_token}&fields=email`)
+        })
+        .then((resp)=>resp.json())
+        .then((json)=>{
+            console.log(json);
         })
         .catch(
             (err)=>{console.log(err)}
         )
-    // https.get(`https://graph.facebook.com/oauth/access_token?grant_type=fb_exchange_token&client_id=${app_id}&client_secret=${app_secret}&fb_exchange_token=${access_token}`, (resp) => {
-    // let data = '';
-
-    // // A chunk of data has been recieved.
-    // resp.on('data', (chunk) => {
-    //     data += chunk;
-    // });
-
-    // // The whole response has been received. Print out the result.
-    // resp.on('end', () => {
-    //     let access = JSON.parse(data);
-    //     let long_lived_access_token = access.access_token;
-    //     let expiry =  access.expires_in;
-    //     console.log(long_lived_access_token);
-    //     console.log(expiry);
-    //     res.send({
-    //         success:true,
-    //         message:'token verified'
-    //     })
-    // });
-
-    // }).on("error", (err) => {
-    //     res.send({
-    //         success:false,
-    //         message:'Some error occured'
-    //     })
-    //     console.log("Error: " + err.message);
-    // });
 });
 
 //launch============================================================================

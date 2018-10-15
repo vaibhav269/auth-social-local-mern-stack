@@ -29,25 +29,44 @@ class LocalLogin extends Component{
             mode : 'cors',
             cache : 'default'
         }
+
         fetch('/api/account/signin',options)
-        .then( res=>{
-            res.json().then(
-                (text)=>{                     
-                    this.setState({isLoading:false});        
-                    if(text.success == false){
-                        this.setState({signinError:text.message});
-                    }
-                    else if(text.success == true){                        
-                        try{
-                            localStorage.token=text.token;                            
-                            this.props.setToken(text.token);
-                        }catch(err){
-                            console.log("Error : can't stablish session",err);
-                        }                                            
-                    }
+            .then(res=>res.json())
+            .then(json=>{
+                this.setState({isLoading:false});
+                if(json.success == false){
+                    this.setState({signinError:json.message});
                 }
-            );
-        })
+                else if(json.success == true){
+                    try{
+                        localStorage.token=json.token;                            
+                        this.props.setToken(json.token);
+                    }catch(err){
+                        console.log("Error : can't stablish session",err);
+                    }                                            
+                }
+            })
+            .catch(err=>console.log(err))
+
+        // fetch('/api/account/signin',options)
+        // .then( res=>{
+        //     res.json().then(
+        //         (text)=>{
+        //             this.setState({isLoading:false});        
+        //             if(text.success == false){
+        //                 this.setState({signinError:text.message});
+        //             }
+        //             else if(text.success == true){
+        //                 try{
+        //                     localStorage.token=text.token;                            
+        //                     this.props.setToken(text.token);
+        //                 }catch(err){
+        //                     console.log("Error : can't stablish session",err);
+        //                 }                                            
+        //             }
+        //         }
+        //     );
+        // })
     }
 
     render(){
