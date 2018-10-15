@@ -17,8 +17,6 @@ var configDB = require('./server/config/db.js');
 
 mongoose.connect(configDB.url,{useNewUrlParser:true});
 
-
-
 //for rendering react js
 app.use(express.static('dist')); 
 
@@ -37,9 +35,12 @@ app.use(flash()); //for flash messages stored in session
 
 
 //routes==========================================================================
-require('./server/app/routes/api/signin.js')(app) 
-require('./server/app/routes/api/signup.js')(app)
-
+require('./server/app/routes/api/signin.js')(app);
+require('./server/app/routes/api/signup.js')(app);
+require('./server/app/routes/api/getUserData.js')(app);
+require('./server/app/routes/api/verify.js')(app);
+require('./server/app/routes/api/signInGoogle.js')(app);
+require('./server/app/routes/api/logout.js')(app);
 
 app.post('/hello',function(req,res){
     console.log("i came here");
