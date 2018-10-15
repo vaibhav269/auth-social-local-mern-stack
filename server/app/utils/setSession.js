@@ -12,7 +12,6 @@ module.exports =  function( userid,res ){
             });
         }
         else{  
-            console.log('hello');
              return res.send({
                 success:true,
                 message:'Valid sign in',

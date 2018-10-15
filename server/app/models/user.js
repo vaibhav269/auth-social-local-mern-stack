@@ -23,9 +23,9 @@ var userSchema = mongoose.Schema({
         type: String,
         default:''      
       },
-      googleProvider: {
-        type: String,
-        default:''
+      facebookProvider: {
+        id:String,
+        token:String
       }
 });
 
