@@ -25,9 +25,11 @@ module.exports = function(app){
         oauth2Client.getToken(code, function(err, tokens) {           
           // Now tokens contains an access_token and an optional refresh_token. Save them.
             if(!err) {
+
                 verifyGoogle(tokens.id_token).then(payload=>{
+                    const id = payload['sub'];
                     User.find({
-                        email:payload['email']
+                        'googleProvider.id':id
                     },function(err,previousUsers){
                         if(err){
                             return res.send({
@@ -37,14 +39,14 @@ module.exports = function(app){
                         }
                         else if(previousUsers.length > 0 ){
                             const user = previousUsers[0];                                
-                                setSession(previousUsers[0]._id,res);                                    
+                            setSession(previousUsers[0]._id,res);
                         }
                         
                         else{
                             const newUser = new User();
                             newUser.email = payload['email'];
-
-                            newUser.googleProvider = tokens.refresh_token;
+                            newUser.googleProvider.id = payload['sub'];
+                            newUser.googleProvider.token = tokens.refresh_token;
                             newUser.save((err,user) =>{
                                 if(err){
                                     return res.send({
