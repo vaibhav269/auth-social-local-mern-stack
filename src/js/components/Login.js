@@ -3,7 +3,6 @@ import LoginFacebook from './LoginFacebook';
 import LoginGoogle from './LoginGoogle';
 import config from '../../JSON/config.json';
 import '../../css/login.css';
-import '../../css/preloader.css';
 import LocalLogin from './LocalLogin';
 import {Link} from 'react-router-dom';
 
