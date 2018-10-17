@@ -1,10 +1,9 @@
 import React,{Component} from 'react';
- 
+
 class LocalLogin extends Component{    
      constructor(){
          super();
-         this.state = {
-            isLoading:false,
+         this.state = {      
             signinError:''            
         }
         this.localLogin = this.localLogin.bind(this);
@@ -12,9 +11,7 @@ class LocalLogin extends Component{
      
      localLogin(event){
         event.preventDefault();
-
-        this.setState({isLoading:true});
-
+        this.props.setIsLoading(true);
         const formData = new FormData(event.target);
         let jsonObject = {};
 
@@ -30,11 +27,11 @@ class LocalLogin extends Component{
             cache : 'default'
         }
 
-        fetch('/api/account/signin',options)
+        fetch('/api/account/signin',options)            
             .then(res=>res.json())
             .then(json=>{
-                this.setState({isLoading:false});
-                if(json.success == false){
+                this.props.setIsLoading(false);
+                    if(json.success == false){
                     this.setState({signinError:json.message});
                 }
                 else if(json.success == true){
@@ -47,30 +44,10 @@ class LocalLogin extends Component{
                 }
             })
             .catch(err=>console.log(err))
-
-        // fetch('/api/account/signin',options)
-        // .then( res=>{
-        //     res.json().then(
-        //         (text)=>{
-        //             this.setState({isLoading:false});        
-        //             if(text.success == false){
-        //                 this.setState({signinError:text.message});
-        //             }
-        //             else if(text.success == true){
-        //                 try{
-        //                     localStorage.token=text.token;                            
-        //                     this.props.setToken(text.token);
-        //                 }catch(err){
-        //                     console.log("Error : can't stablish session",err);
-        //                 }                                            
-        //             }
-        //         }
-        //     );
-        // })
     }
 
     render(){
-        let {isLoading,signinError} = this.state;
+        let {signinError} = this.state;
         return(
             <div className="row justify-content-center pr-3 pl-3">
                 
