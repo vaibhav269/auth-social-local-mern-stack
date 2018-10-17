@@ -7,9 +7,58 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" >    
     <title>React Social Login</title>
     
+    <style>
+        i {
+            height: 2em;
+            width: 2em;
+            border-radius: 100%;
+            background: #000;
+            display: block;
+            margin: 10em auto;
+            position: absolute;
+            left: 50%;
+            animation: spin 2s ease infinite;
+        }
+        i:before, i:after {
+            content: '';
+            display: block;
+            position: absolute;
+            height: inherit;
+            width: inherit;
+            background: inherit;
+            border-radius: inherit;
+            animation: spin 2s ease infinite;
+        }
+        i:before {
+            left: -2.3em;
+        }
+        i:after {
+            left: 2.3em;
+        }
+
+        @keyframes spin {
+            0% {
+                top: 0;
+                transform: rotate(0deg);
+            }
+            50% {
+                top: -4em;
+                transform: rotate(-180deg);
+            }
+            100% {
+                top: 0;
+                transform: rotate(-360deg);
+            }
+        }
+
+    </style>
 </head>
 <body>    
     
+    <i class="preloader" id="preloader">
+        
+    </i>
+
     <div id="app">
         
     </div> 
