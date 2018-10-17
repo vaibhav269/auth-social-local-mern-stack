@@ -14,7 +14,7 @@ class AppOne extends Component{
     constructor(){
         super();
         this.state = {            
-            isLoading:false
+            isLoading:true
         }
         this.isLoading = this.isLoading.bind(this);
     }
