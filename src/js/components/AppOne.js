@@ -19,6 +19,10 @@ class AppOne extends Component{
         this.isLoading = this.isLoading.bind(this);
     }
     
+    componentDidMount(){
+        this.setState({isLoading:false});
+    }
+
     isLoading(){
         let {isLoading} = this.state;
 

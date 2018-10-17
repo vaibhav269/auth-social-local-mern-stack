@@ -7,6 +7,7 @@ const CLIENT_SECRET = 'S2QzHZ5hvn0rOppDGwxMJE_d';
 const REDIRECT_URI = 'http://localhost:3000';
 const setSession = require('../../utils/setSession');
 
+//to verify and get data from id_token 
 async function verifyGoogle(token) {
     const client = new OAuth2Client(CLIENT_ID);
     const ticket = await client.verifyIdToken({
