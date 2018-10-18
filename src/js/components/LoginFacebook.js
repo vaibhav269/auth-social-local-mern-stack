@@ -27,7 +27,6 @@ export default class LoginFacebook extends Component{
                 type:'application/json'
             }
         );
-        console.log(response);
         const options = {
             method: 'POST',
             body :tokenBlob,
@@ -46,11 +45,11 @@ export default class LoginFacebook extends Component{
                             localStorage.token=text.token;                            
                             this.props.setToken(text.token);
                         }catch(err){
-                            console.log("Error : can't stablish session",err);
+                            alert("Error : can't stablish session",err);
                         }                                            
                     }
             })
-            .catch((err)=>{console.log(err)})
+            .catch((err)=>{alert("Some error ocurred")})
         
     }
     render(){

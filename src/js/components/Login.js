@@ -35,7 +35,6 @@ class Login extends Component{
             visibilityMaintainer.opacity = '0.7';
         }
         else{
-            console.log('wtf');
             visibilityMaintainer.opacity = '1';            
         }
         return (

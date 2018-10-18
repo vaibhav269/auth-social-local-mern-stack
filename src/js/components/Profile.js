@@ -13,15 +13,12 @@ class Profile extends Component{
             .then(res=>res.json())
             .then(json=>{
                 if(json.success === true){
-                    console.log(json.message.email);
                     this.setState({
                         email:json.message.email,
                         signUpDate:json.message.signUpDate
                     });
-                    console.log(this.state);
                 }
                 else{
-                    console.log('error occured');
                     alert(json.message);
                 }
             });

@@ -5,7 +5,6 @@ module.exports = function(app){
     app.post('/api/account/signup',function(req,res,next){
         const password = req.body.password;
         let email = req.body.email;
-        console.log(req.body);
         if(!email){
             return res.send({
                 success: false,

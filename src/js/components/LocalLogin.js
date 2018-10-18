@@ -43,7 +43,7 @@ class LocalLogin extends Component{
                     }                                            
                 }
             })
-            .catch(err=>console.log(err))
+            .catch(err=>alert("some error occured"))
     }
 
     render(){
